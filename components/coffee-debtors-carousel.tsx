@@ -40,6 +40,13 @@ const debtors: CoffeeDebtor[] = [
     coffees: 1,
     since: "Septiembre 2025",
     reason: "Llegó tarde a la daily de los jueves 👁️",
+  },
+  {
+    id: 4,
+    name: "YeiPi",
+    coffees: 1,
+    since: "Octubre 2025",
+    reason: "Borró mensaje del grupo de deudores ☕",
   }
 ];
 
@@ -55,14 +62,14 @@ export function CoffeeDebtorsCarousel() {
 
     const intervalId = setInterval(() => {
       scrollNext()
-    }, 3000)
+    }, 30000)
 
     const container = api.rootNode()
     const handleMouseEnter = () => clearInterval(intervalId)
     const handleMouseLeave = () => {
       const newIntervalId = setInterval(() => {
         scrollNext()
-      }, 3000)
+      }, 30000)
       return () => clearInterval(newIntervalId)
     }
 

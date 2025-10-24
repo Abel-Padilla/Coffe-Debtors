@@ -28,11 +28,11 @@ export default function Home() {
             <DialogTrigger asChild>
               <Button>Reglamento</Button>
             </DialogTrigger>
-            <DialogContent className="max-w-lg">
+            <DialogContent className="sm:max-w-[425px] md:max-w-[600px] lg:max-w-[700px] w-[90vw] p-4 md:p-6">
               <DialogHeader>
                 <DialogTitle>Reglamento del Café ☕</DialogTitle>
                 <DialogDescription>
-                  Normas oficiales del equipo para el ritual semanal del café.
+                  Normas oficiales del equipo para los deudores de café.
                 </DialogDescription>
               </DialogHeader>
 
@@ -59,6 +59,11 @@ export default function Home() {
                   <p className="mt-2">
                     Se considera “conectado” cuando aparece en la sala virtual
                     de la daily y puede ser visto o escuchado por el resto.
+                  </p>
+                  <p>
+                    <strong>Los que borren mensajes del grupo</strong>{"  "}
+                    "Deudores cafeteros morosos" también serán considerados
+                    deudores.
                   </p>
                 </div>
 
