@@ -44,6 +44,14 @@ const debtors: CoffeeDebtor[] = [
     coffees: 1,
     since: "Diciembre 2025",
     reason: "Dejó su laptop desbloqueada 🔒",
+  },
+  {
+    id: "00880153",
+    name : "Eduardo Rafael",
+     avatar: "ER",
+     coffees: 1,
+    since: "Febrero 2025",
+    reason: "Mandó mensaje: invito los cafes del canteen",
   }
 ];
 
