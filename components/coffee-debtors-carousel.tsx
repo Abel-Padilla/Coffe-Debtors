@@ -10,7 +10,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
+import { X, Grid, List } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface CoffeeDebtor {
   id: string | number;
@@ -66,9 +67,20 @@ const debtors: CoffeeDebtor[] = [
   },
 ];
 
-export function CoffeeDebtorsCarousel() {
+interface CoffeeDebtorsCarouselProps {
+  viewMode?: "carousel" | "grid";
+  onViewModeChange?: (mode: "carousel" | "grid") => void;
+  showViewToggle?: boolean;
+}
+
+export function CoffeeDebtorsCarousel({ 
+  viewMode = "carousel",
+  onViewModeChange,
+  showViewToggle = true
+}: CoffeeDebtorsCarouselProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentViewMode, setCurrentViewMode] = useState<"grid" | "carousel">(viewMode);
 
   const scrollNext = useCallback(() => {
     api?.scrollNext();
@@ -78,8 +90,13 @@ export function CoffeeDebtorsCarousel() {
     setSelectedImage(null);
   }, []);
 
+  const handleViewModeChange = useCallback((mode: "carousel" | "grid") => {
+    setCurrentViewMode(mode);
+    onViewModeChange?.(mode);
+  }, [onViewModeChange]);
+
   useEffect(() => {
-    if (!api) return;
+    if (!api || currentViewMode !== "carousel") return;
 
     const intervalId = setInterval(() => {
       scrollNext();
@@ -102,7 +119,7 @@ export function CoffeeDebtorsCarousel() {
       container.removeEventListener("mouseenter", handleMouseEnter);
       container.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [api, scrollNext]);
+  }, [api, scrollNext, currentViewMode]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -122,86 +139,123 @@ export function CoffeeDebtorsCarousel() {
     };
   }, [selectedImage, closeModal]);
 
+  const DebtorCard = ({ debtor, index }: { debtor: CoffeeDebtor; index: number }) => (
+    <Card className="border-2 transition-all hover:shadow-lg hover:border-primary/50 h-full">
+      <CardContent className="flex flex-col gap-4 p-6 h-full">
+        <div className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-amber-100 text-sm font-bold text-amber-700">
+          #{index + 1}
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-amber-600 text-xl font-bold text-white shadow-lg">
+              <img
+                src={`//3ms.huawei.com/api/expert/face/${debtor.id}/120`}
+                alt={debtor.name}
+                className="h-16 w-16 rounded-full"
+              />
+            </div>
+          </div>
+          <div className="flex-1 space-y-1">
+            <h3 className="text-lg font-bold text-card-foreground leading-tight">
+              {debtor.name}
+            </h3>
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary" className="text-xs">
+                Café para el team
+              </Badge>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex-1 space-y-3">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-muted-foreground">
+            </span>
+            <span>Desde {debtor.since}</span>
+          </div>
+
+          <div className="rounded-lg bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 p-3 dark:from-amber-950 dark:to-orange-950 dark:border-amber-800">
+            <p className="text-sm text-amber-900 dark:text-amber-100 leading-relaxed">
+              {debtor.reason}
+              {debtor.img && (
+                <img 
+                  src={debtor.img} 
+                  alt="Debtor" 
+                  className="mt-2 w-full h-auto rounded-md cursor-pointer hover:opacity-80 transition-opacity" 
+                  onClick={() => setSelectedImage(debtor.img!)}
+                />
+              )}  
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   return (
-    <div className="mx-auto max-w-5xl">
-      <Carousel
-        setApi={setApi}
-        opts={{
-          align: "start",
-          loop: true,
-        }}
-        className="w-full"
-      >
-        <CarouselContent className="-ml-4 md:-ml-4">
+    <div className="space-y-6">
+      {showViewToggle && (
+        <div className="flex justify-end gap-2">
+          <Button
+            variant={currentViewMode === "carousel" ? "default" : "outline"}
+            size="sm"
+            onClick={() => handleViewModeChange("carousel")}
+            title="Vista Carousel"
+          >
+            <List className="h-4 w-4" />
+          </Button>
+          <Button
+            variant={currentViewMode === "grid" ? "default" : "outline"}
+            size="sm"
+            onClick={() => handleViewModeChange("grid")}
+            title="Vista Grid"
+          >
+            <Grid className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
+
+      {currentViewMode === "carousel" ? (
+        <div className="mx-auto max-w-5xl">
+          <Carousel
+            setApi={setApi}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4 md:-ml-4">
+              {debtors.map((debtor, index) => (
+                <CarouselItem
+                  key={debtor.id}
+                  className="pl-2 md:basis-1/2 md:pl-4 lg:basis-1/3 relative"
+                >
+                  <DebtorCard debtor={debtor} index={index} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
+
+          <div className="mt-8 text-center">
+            <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
+              <span className="inline-block animate-pulse">●</span>
+              Auto-deslizando • Pausa al pasar el cursor
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {debtors.map((debtor, index) => (
-            <CarouselItem
-              key={debtor.id}
-              className="pl-2 md:basis-1/2 md:pl-4 lg:basis-1/3 relative"
-            >
-              <Card className="border-2 transition-all hover:shadow-lg hover:border-primary/50 h-full">
-                <CardContent className="flex flex-col gap-4 p-6 h-full">
-                  <div className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-amber-100 text-sm font-bold text-amber-700">
-                    #{index + 1}
-                  </div>
-
-                  <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-amber-600 text-xl font-bold text-white shadow-lg">
-                        <img
-                          src={`//3ms.huawei.com/api/expert/face/${debtor.id}/120`}
-                          alt={debtor.name}
-                          className="h-16 w-16 rounded-full"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex-1 space-y-1">
-                      <h3 className="text-lg font-bold text-card-foreground leading-tight">
-                        {debtor.name}
-                      </h3>
-                      <div className="flex items-center gap-2">
-                        <Badge variant="secondary" className="text-xs">
-                          Café para el team
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex-1 space-y-3">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-muted-foreground">
-                      </span>
-                      <span>Desde {debtor.since}</span>
-                    </div>
-
-                    <div className="rounded-lg bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 p-3">
-                      <p className="text-sm text-amber-900 leading-relaxed">
-                        {debtor.reason}
-                        {debtor.img && (
-                          <img 
-                            src={debtor.img} 
-                            alt="Debtor" 
-                            className="mt-2 w-full h-auto rounded-md cursor-pointer hover:opacity-80 transition-opacity" 
-                            onClick={() => setSelectedImage(debtor.img!)}
-                          />
-                        )}  
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </CarouselItem>
+            <div key={debtor.id} className="relative">
+              <DebtorCard debtor={debtor} index={index} />
+            </div>
           ))}
-        </CarouselContent>
-        <CarouselPrevious className="hidden md:flex" />
-        <CarouselNext className="hidden md:flex" />
-      </Carousel>
-
-      <div className="mt-8 text-center">
-        <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
-          <span className="inline-block animate-pulse">●</span>
-          Auto-deslizando • Pausa al pasar el cursor
-        </p>
-      </div>
+        </div>
+      )}
 
       {selectedImage && (
         <div 

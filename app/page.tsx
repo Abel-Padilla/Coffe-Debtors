@@ -1,6 +1,7 @@
 "use client";
 
 import { CoffeeDebtorsCarousel } from "@/components/coffee-debtors-carousel";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,23 +11,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Coffee } from "lucide-react";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12 md:py-20">
-        <div className="mb-12 text-center">
-          <h1 className="mb-4 text-5xl font-bold tracking-tight text-foreground md:text-7xl">
-            Deudores de café Tools
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground md:text-xl">
-            Deben café al team ☕
-          </p>
-
-          {/* Modal del Reglamento */}
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button>Reglamento</Button>
+      {/* Header con navegación minimalista */}
+      <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex-1">
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
+              <Coffee className="inline-block mr-2" />
+               Deudores de café
+            </h1>
+          </div>
+          <div className="flex items-center gap-3">
+            <Dialog>
+              <DialogTrigger asChild>
+              <Button variant="outline" size="sm">
+                Reglamento
+              </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] md:max-w-[600px] lg:max-w-[700px] w-[90vw] p-4 md:p-6">
               <DialogHeader>
@@ -62,6 +66,11 @@ export default function Home() {
                   </p>
                   <p>
                     <strong>Los que borren mensajes del grupo</strong>{"  "}
+                    "Deudores cafeteros morosos" también serán considerados
+                    deudores.
+                  </p>
+                  <p>
+                    <strong>Los que dejen su laptop desbloqueada y alguien mande mensaje al grupo</strong>{"  "}
                     "Deudores cafeteros morosos" también serán considerados
                     deudores.
                   </p>
@@ -115,10 +124,15 @@ export default function Home() {
                 </div>
               </div>
             </DialogContent>
-          </Dialog>
+            </Dialog>
+            <ThemeToggle />
+          </div>
         </div>
+      </header>
 
-        <CoffeeDebtorsCarousel />
+      {/* Main content */}
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <CoffeeDebtorsCarousel showViewToggle={true} />
       </div>
     </main>
   );
