@@ -10,6 +10,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
+import { X } from "lucide-react";
 
 interface CoffeeDebtor {
   id: string | number;
@@ -55,7 +56,7 @@ const debtors: CoffeeDebtor[] = [
     reason: "Mandó mensaje: invito los cafes del canteen",
   },
   {
-    id: "00880153",
+    id: "00872437",
     name: "Habibi",
     avatar: "HB",
     coffees: 1,
@@ -67,10 +68,15 @@ const debtors: CoffeeDebtor[] = [
 
 export function CoffeeDebtorsCarousel() {
   const [api, setApi] = useState<CarouselApi>();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const scrollNext = useCallback(() => {
     api?.scrollNext();
   }, [api]);
+
+  const closeModal = useCallback(() => {
+    setSelectedImage(null);
+  }, []);
 
   useEffect(() => {
     if (!api) return;
@@ -97,6 +103,24 @@ export function CoffeeDebtorsCarousel() {
       container.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, [api, scrollNext]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    if (selectedImage) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedImage, closeModal]);
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -153,7 +177,12 @@ export function CoffeeDebtorsCarousel() {
                       <p className="text-sm text-amber-900 leading-relaxed">
                         {debtor.reason}
                         {debtor.img && (
-                          <img src={debtor.img} alt="Debtor" className="mt-2 w-full h-auto rounded-md" />
+                          <img 
+                            src={debtor.img} 
+                            alt="Debtor" 
+                            className="mt-2 w-full h-auto rounded-md cursor-pointer hover:opacity-80 transition-opacity" 
+                            onClick={() => setSelectedImage(debtor.img!)}
+                          />
                         )}  
                       </p>
                     </div>
@@ -173,6 +202,31 @@ export function CoffeeDebtorsCarousel() {
           Auto-deslizando • Pausa al pasar el cursor
         </p>
       </div>
+
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center"
+          onClick={closeModal}
+        >
+          <div 
+            className="relative max-w-2xl max-h-[80vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={closeModal}
+              className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors"
+              aria-label="Cerrar"
+            >
+              <X size={32} />
+            </button>
+            <img 
+              src={selectedImage} 
+              alt="Expandida" 
+              className="w-full h-full object-contain rounded-lg"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
