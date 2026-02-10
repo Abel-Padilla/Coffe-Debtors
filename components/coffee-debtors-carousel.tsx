@@ -152,7 +152,9 @@ export function CoffeeDebtorsCarousel() {
                     <div className="rounded-lg bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 p-3">
                       <p className="text-sm text-amber-900 leading-relaxed">
                         {debtor.reason}
-                        <img src={debtor.img} alt="Debtor" className="" />
+                        {debtor.img && (
+                          <img src={debtor.img} alt="Debtor" className="mt-2 w-full h-auto rounded-md" />
+                        )}  
                       </p>
                     </div>
                   </div>
