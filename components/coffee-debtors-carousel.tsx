@@ -65,6 +65,15 @@ const debtors: CoffeeDebtor[] = [
     reason: "Mandó mensaje: invito los cafes del canteen",
     img : "/img/00872437_20260210.PNG"
   },
+  {
+    id: "00872618",
+    name: "César",
+    avatar: "CS",
+    coffees: 1,
+    since: "Febrero 2026",
+    reason: "Mandó mensaje: invito los cafes del canteen",
+    img : "/img/00872618_20260211.PNG"
+  },
 ];
 
 interface CoffeeDebtorsCarouselProps {
