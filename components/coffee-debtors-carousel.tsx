@@ -10,7 +10,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
-import { X, Grid, List } from "lucide-react";
+import { X, Grid, List, Coffee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface CoffeeDebtor {
@@ -24,56 +24,7 @@ interface CoffeeDebtor {
 }
 
 const debtors: CoffeeDebtor[] = [
-  {
-    id: "00879534",
-    name: "Gerardo",
-    avatar: "GP",
-    coffees: 1,
-    since: "Septiembre 2025",
-    reason: "Llegó tarde a la daily de los jueves 👁️",
-  },
-  {
-    id: "00872618",
-    name: "César",
-    avatar: "CS",
-    coffees: 1,
-    since: "Septiembre 2025",
-    reason: "Llegó tarde a la daily de los jueves 👁️",
-  },
-  {
-    id: "00963527",
-    name: "Nohemi",
-    avatar: "NH",
-    coffees: 1,
-    since: "Diciembre 2025",
-    reason: "Dejó su laptop desbloqueada 🔒",
-  },
-  {
-    id: "00880153",
-    name: "Eduardo Rafael",
-    avatar: "ER",
-    coffees: 1,
-    since: "Febrero 2026",
-    reason: "Mandó mensaje: invito los cafes del canteen",
-  },
-  {
-    id: "00872437",
-    name: "Habibi",
-    avatar: "HB",
-    coffees: 1,
-    since: "Febrero 2026",
-    reason: "Mandó mensaje: invito los cafes del canteen",
-    img : "/img/00872437_20260210.PNG"
-  },
-  {
-    id: "00872618",
-    name: "César",
-    avatar: "CS",
-    coffees: 1,
-    since: "Febrero 2026",
-    reason: "Mandó mensaje: invito los cafes del canteen",
-    img : "/img/00872618_20260211.PNG"
-  },
+  
 ];
 
 interface CoffeeDebtorsCarouselProps {
@@ -201,6 +152,20 @@ export function CoffeeDebtorsCarousel({
       </CardContent>
     </Card>
   );
+
+  // Mostrar mensaje cuando no hay deudores
+  if (debtors.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 px-4">
+        <div className="text-center space-y-4">
+          <Coffee className="h-16 w-16 mx-auto text-amber-500 opacity-50" />
+          <p className="text-xl text-muted-foreground">
+            Sin deudores
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
