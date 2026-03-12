@@ -25,7 +25,7 @@ interface CoffeeDebtor {
 
 const debtors: CoffeeDebtor[] = [
   {
-    id: 1,
+    id: '00872446',
     name: "Abel",
     avatar: "//3ms.huawei.com/api/expert/face/00872446/120",
     coffees: 10,
