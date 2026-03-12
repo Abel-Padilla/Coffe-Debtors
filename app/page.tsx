@@ -12,118 +12,129 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Coffee } from "lucide-react";
+import Aurora from "@/components/aurora";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
-      {/* Header con navegación minimalista */}
-      <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <main className="min-h-screen bg-background relative">
+      {/* Aurora como fondo de toda la página */}
+      <div className="fixed inset-0 z-0">
+        
+      </div>
+
+      {/* Header */}
+      <header className="relative z-10 border-b border-border/40 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex-1">
             <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
               <Coffee className="inline-block mr-2" />
-               Deudores de café
+              Deudores de café
             </h1>
           </div>
+
           <div className="flex items-center gap-3">
             <Dialog>
               <DialogTrigger asChild>
-              <Button variant="outline" size="sm">
-                Reglamento
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] md:max-w-[600px] lg:max-w-[700px] w-[90vw] p-4 md:p-6">
-              <DialogHeader>
-                <DialogTitle>Reglamento del Café ☕</DialogTitle>
-                <DialogDescription>
-                  Normas oficiales del equipo para los deudores de café.
-                </DialogDescription>
-              </DialogHeader>
+                <Button variant="outline" size="sm">
+                  Reglamento
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px] md:max-w-[600px] lg:max-w-[700px] w-[90vw] p-4 md:p-6">
+                <DialogHeader>
+                  <DialogTitle>Reglamento del Café ☕</DialogTitle>
+                  <DialogDescription>
+                    Normas oficiales del equipo para los deudores de café.
+                  </DialogDescription>
+                </DialogHeader>
 
-              <div className="space-y-6 text-sm text-muted-foreground">
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">
-                    1. Día y hora
-                  </h3>
-                  <p>
-                    La daily es todos los{" "}
-                    <strong>jueves a las 9:10 a.m. en punto</strong>.
-                  </p>
-                </div>
+                <div className="space-y-6 text-sm text-muted-foreground">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">
+                      1. Día y hora
+                    </h3>
+                    <p>
+                      La daily es todos los{" "}
+                      <strong>jueves a las 9:10 a.m. en punto</strong>.
+                    </p>
+                  </div>
 
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">
-                    2. Cómo se cuenta
-                  </h3>
-                  <p>
-                    El <strong>último en conectarse</strong>{" "}
-                    a la reunión desde su computadora (no cuenta el celular)
-                    será quien tenga que invitar los cafés al equipo.
-                  </p>
-                  <p className="mt-2">
-                    Se considera “conectado” cuando aparece en la sala virtual
-                    de la daily y puede ser visto o escuchado por el resto.
-                  </p>
-                  <p>
-                    <strong>Los que borren mensajes del grupo</strong>{"  "}
-                    "Deudores cafeteros morosos" también serán considerados
-                    deudores.
-                  </p>
-                  <p>
-                    <strong>Los que dejen su laptop desbloqueada y alguien mande mensaje al grupo</strong>{"  "}
-                    "Deudores cafeteros morosos" también serán considerados
-                    deudores.
-                  </p>
-                </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">
+                      2. Cómo se cuenta
+                    </h3>
+                    <p>
+                      El <strong>último en conectarse</strong>{" "}
+                      a la reunión desde su computadora (no cuenta el celular)
+                      será quien tenga que invitar los cafés al equipo.
+                    </p>
+                    <p className="mt-2">
+                      Se considera "conectado" cuando aparece en la sala virtual
+                      de la daily y puede ser visto o escuchado por el resto.
+                    </p>
+                    <p>
+                      <strong>Los que borren mensajes del grupo</strong>{"  "}
+                      "Deudores cafeteros morosos" también serán considerados
+                      deudores.
+                    </p>
+                    <p>
+                      <strong>
+                        Los que dejen su laptop desbloqueada y alguien mande
+                        mensaje al grupo
+                      </strong>{"  "}
+                      "Deudores cafeteros morosos" también serán considerados
+                      deudores.
+                    </p>
+                  </div>
 
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">
-                    3. Excepciones
-                  </h3>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>
-                      Si alguien avisa por anticipado (al menos 10 minutos
-                      antes) que tendrá un problema legítimo y el equipo lo
-                      acepta, no contará como último.
-                    </li>
-                    <li>Si todos llegan puntuales, ¡nadie invita!</li>
-                    <li>
-                      Si el organizador o TL llega tarde, también puede ser
-                      acreedor a la invitación.
-                    </li>
-                  </ul>
-                </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">
+                      3. Excepciones
+                    </h3>
+                    <ul className="list-disc pl-6 space-y-1">
+                      <li>
+                        Si alguien avisa por anticipado (al menos 10 minutos
+                        antes) que tendrá un problema legítimo y el equipo lo
+                        acepta, no contará como último.
+                      </li>
+                      <li>Si todos llegan puntuales, ¡nadie invita!</li>
+                      <li>
+                        Si el organizador o TL llega tarde, también puede ser
+                        acreedor a la invitación.
+                      </li>
+                    </ul>
+                  </div>
 
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">
-                    4. Entrega de café
-                  </h3>
-                  <p>
-                    El invitado debe encargarse de organizar la compra y entrega
-                    de los cafés el viernes o antes del siguiente jueves.
-                  </p>
-                  <p className="mt-2">
-                    Puede elegir el método (Canteen, Starbucks, Oxxo, giftcard,
-                    etc.), pero debe ser equitativo para todos los presentes ese
-                    día.
-                  </p>
-                </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">
+                      4. Entrega de café
+                    </h3>
+                    <p>
+                      El invitado debe encargarse de organizar la compra y
+                      entrega de los cafés el viernes o antes del siguiente
+                      jueves.
+                    </p>
+                    <p className="mt-2">
+                      Puede elegir el método (Canteen, Starbucks, Oxxo,
+                      giftcard, etc.), pero debe ser equitativo para todos los
+                      presentes ese día.
+                    </p>
+                  </div>
 
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">
-                    5. Transparencia
-                  </h3>
-                  <p>
-                    El registro de quién paga cada semana se llevará en el chat
-                    del equipo o en una tabla de seguimiento.
-                  </p>
-                  <p className="mt-2">
-                    Si alguien no cumple, la deuda se acumula y se agrega a la
-                    fila de deudores.
-                  </p>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">
+                      5. Transparencia
+                    </h3>
+                    <p>
+                      El registro de quién paga cada semana se llevará en el
+                      chat del equipo o en una tabla de seguimiento.
+                    </p>
+                    <p className="mt-2">
+                      Si alguien no cumple, la deuda se acumula y se agrega a la
+                      fila de deudores.
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </DialogContent>
+              </DialogContent>
             </Dialog>
             <ThemeToggle />
           </div>
@@ -131,7 +142,7 @@ export default function Home() {
       </header>
 
       {/* Main content */}
-      <div className="container mx-auto px-4 py-12 md:py-16">
+      <div className="relative z-10 container mx-auto px-4 py-12 md:py-16">
         <CoffeeDebtorsCarousel showViewToggle={true} />
       </div>
     </main>

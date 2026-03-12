@@ -10,6 +10,7 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
+    setTheme("dark");
     setMounted(true);
   }, []);
 
