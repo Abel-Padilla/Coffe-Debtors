@@ -24,15 +24,6 @@ interface CoffeeDebtor {
 }
 
 const debtors: CoffeeDebtor[] = [
-  {
-    id: '00872446',
-    name: "Abel",
-    avatar: "//3ms.huawei.com/api/expert/face/00872446/120",
-    coffees: 10,
-    since: "Marzo 13 2026",
-    reason: "Dejó su lap desbloqueada en manos de Habibi (fecha de pago: Cuando caigan las utilidades)",
-    img: "/img/00872446_20260312.PNG",
-  },
 ];
 
 interface CoffeeDebtorsCarouselProps {
