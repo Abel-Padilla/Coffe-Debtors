@@ -24,6 +24,16 @@ interface CoffeeDebtor {
 }
 
 const debtors: CoffeeDebtor[] = [
+  {
+    id: "e00880153",
+    name: "Rafa",
+    avatar: "//3ms.huawei.com/api/expert/face/00880153/120",
+    coffees: 1,
+    since: "2026-04-24",
+    reason: "Invitó los cafés en el chat",
+    img: "/img/00880153_20260424.PNG"
+
+  }
 ];
 
 interface CoffeeDebtorsCarouselProps {
